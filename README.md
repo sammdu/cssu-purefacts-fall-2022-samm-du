@@ -1,12 +1,15 @@
 # cssu-purefacts-fall-2022-samm-du
 
-## Usage
+## 1. Prepared outputs:
+:eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
+
+## 2. Usage
 
 #### Create a virtual environment & install the required packages
 
 This program requires `Python3.10` or above.
 
-Please install the necessary packages in `requirements.txt`.
+Please install the necessary packages in [`requirements.txt`](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/requirements.txt).
 
 ```
 jupyter==1.0.0
@@ -17,7 +20,7 @@ numpy==1.23.4
 scikit-learn==1.1.3
 ```
 
-### Python Script
+### 2.1. Python Script
 
 #### Computing for a single N value:
 
@@ -38,17 +41,17 @@ python3.10 point_coverage.py -n 10 -o output.csv input.csv
 We can use the provided `run.sh` to produce output files for all N values specified in the handout:
 
 ```bash
-bash ./run.sh  input.csv
+bash ./run.sh input.csv
 ```
 
 Output files will be generated in the current directory, named `output_%d.csv`.
 
-### Jupyter Notebook
+### 2.2. Jupyter Notebook
 
 The Jupyter Notebook contains step-by-step computation and analysis.
 Useful if you are interested in the details.
 The same required packages apply.
 
-## Analysis
+## 3. Analysis
 
 ⚠️ TBD
