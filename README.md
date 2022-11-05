@@ -22,6 +22,8 @@ scikit-learn==1.1.3
 
 ### 2.1. Python Script
 
+👉 [point_coverage.py](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/point_coverage.py)
+
 #### Computing for a single N value:
 
 The python program computes the required points for one N value, as such:
@@ -47,6 +49,8 @@ bash ./run.sh input.csv
 Output files will be generated in the current directory, named `output_%d.csv`.
 
 ### 2.2. Jupyter Notebook
+
+👉 [experiment.ipynb](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/experiment.ipynb)
 
 The Jupyter Notebook contains step-by-step computation and analysis.
 Useful if you are interested in the details.
