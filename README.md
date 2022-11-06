@@ -219,20 +219,24 @@ The final optimization allowed the Graph-Disconnect algorithm to successfully co
 
 ### 3.1.3. Processing Centroids
 
-The centroids returned from clustering are not necessarily part of the input dataset.
+The centroids returned from clustering are not part of the input dataset. We must find input data points that are closest to these centroids as points that represent their region ("reps"), in order to form the final output.
+
+[Nearest neighbors algorithms](https://scikit-learn.org/stable/modules/neighbors.html#nearest-neighbors) are well suited for this task, as it tries to find k input points closest to a given set of reference points. The `Skikit-Learn` library [provides such a function](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestNeighbors.html#sklearn-neighbors-nearestneighbors). For our purpose, we find the 1 nearest neighbor from the input data to each of the computed centroids, which we return as representatives.
 
 ## 3.2. Point Coverage Efficacy Evaluation
 
 ### 3.2.1. Visual Inspection
 
 In the following plots:
-- dark gray points are input data
-- blue points are floating-point centroids
-- red points are input points chosen as representatives, which are closest to the blue centroids
 
-For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branching factor is chosen to be `180`. 
+-   dark gray points are input data
+-   blue points are floating-point centroids
+-   red points are input points chosen as representatives, which are closest to the blue centroids
+
+For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branching factor is chosen to be `180`.
 
 #### Scatter Plots for N=10
+
 <table>
 	<tbody>
 		<tr>
@@ -255,6 +259,7 @@ For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branc
 </table>
 
 #### Scatter Plots for N=63
+
 <table>
 	<tbody>
 		<tr>
@@ -271,14 +276,43 @@ For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branc
 		<tr>
 			<th>Graph-Disconnect</th>
 			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200196241-ca5f4fdd-6c6e-490d-8018-925d4ffd30b7.png" /></td>
-			<td width="200">Outlier points seem to be favored over densely congregated points. Many points in dense regions are not covered by a rep.</td>
+			<td width="200">Outlier points seem to be favored over densely congregated points. Many points in dense regions are not covered by an adjacent rep.</td>
 		</tr>
 	</tbody>
 </table>
 
 ### 3.2.2. Quantitative Measures
 
-### 3.2.3. Comparing Efficacy
+I will discuss 4 ways to evaluate the point coverage for each of the three approaches described above.
+
+#### 3.2.2.1. Naive Total Distance to Reps
+
+-   Take all points in the input data, compute their distance to every selected rep point, and take the total sum.
+-   For optimal point coverage, unselected points should be as close to rep points as possible. The total of such distances is therefore a general measure of how close are points to reps throughout the dataset.
+-   Small values in this metric are desireable.
+-   However, this metric favors dense input point distributions, since for dense inputs, more points will be closer to reps compared to sparse inputs.
+
+#### 3.2.2.2. Distances to Closest Rep Points
+
+-   Take all points not selected as a rep, find their closest rep, compute their distance. Take all these distances to the closest rep, and find the max, min, and average.
+-   For optimal point coverage, unselected points should be as close to their rep as possible. This improves upon the naive total distance measure, by focusing on reps that are supposed to cover points in their region.
+-   Small values in this metric are desireable.
+
+#### 3.2.2.3. Closest Distance Between Reps
+
+-   Take all points chosen as reps, find the minimum distance between any 2 reps.
+-   For optimal point coverage, the selected reps should be as far from each other as possible, so that each rep can cover as many unselected points as possible.
+-   Large values in this metric are desireable.
+
+#### 3.2.2.4. Min-Rep-Rep to Point-Rep Ratios
+
+-   The ratio of previous two measures ("3.2.2.3. closest distance between reps" and "3.2.2.2. max|average distance from a point to a rep")
+-   The greater this ratio, the farthest apart are reps to each other, and closer the unselected points to a rep.
+-   Large values in this ratio are desireable.
+-   The min distance between reps to max distance from point to rep (`rr/max`) is a summary measure of point coverage in the worst case, and favors outlier input points.
+-   The min distance between reps to average distance from point to rep (`rr/avg`) is a summary measure of point coverage in the average case, and should be considered the optimal measure.
+
+### 3.2.3. Comparing Efficacy Quantitatively
 
 #### Compare all metrics on N=10
 
@@ -294,9 +328,9 @@ For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branc
 	<tbody>
 		<tr>
 			<td>Total</td>
-			<td colspan="3">---</td>
-			<td colspan="3">---</td>
-			<td colspan="3">---</td>
+			<td colspan="3">29272141.3949</td>
+			<td colspan="3">34850046.2278</td>
+			<td colspan="3">37936438.9315</td>
 		</tr>
 		<tr>
 			<td rowspan="2">Dist-Rep</td>
@@ -311,46 +345,46 @@ For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branc
 			<td>Avg</td>
 		</tr>
 		<tr>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
+			<td>7.2111</td>
+			<td>3246.6056</td>
+			<td>525.7065</td>
+			<td>43.8406</td>
+			<td>1976.1905</td>
+			<td>639.4779</td>
+			<td>59.4811</td>
+			<td>2120.6284</td>
+			<td>895.2549</td>
 		</tr>
 		<tr>
 			<td>Rep-Rep</td>
-			<td colspan="3">---</td>
-			<td colspan="3">---</td>
-			<td colspan="3">---</td>
+			<td colspan="3">997.0245</td>
+			<td colspan="3">1411.0978</td>
+			<td colspan="3">1880.5130</td>
 		</tr>
 		<tr>
 			<td rowspan="2">Ratio</td>
 			<td>rr/max</td>
 			<td>rr/avg</td>
-			<td rowspan="2">??</td>
+			<td rowspan="2">Suboptimal</td>
 			<td>rr/max</td>
 			<td>rr/avg</td>
-			<td rowspan="2">??</td>
+			<td rowspan="2">Best Average</td>
 			<td>rr/max</td>
 			<td>rr/avg</td>
-			<td rowspan="2">??</td>
+			<td rowspan="2">Best Max</td>
 		</tr>
 		<tr>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
-			<td>---</td>
+			<td>0.3071</td>
+			<td>1.8965</td>
+			<td>0.7140</td>
+			<td>2.2066</td>
+			<td>0.8868</td>
+			<td>2.1005</td>
 		</tr>
 	</tbody>
 </table>
 
-As we can see, the k-Means approach does not live up to standard, as it is too biased toward point density, and produces suboptimal rep-rep/dist-rep ratios.
+As we can see, the k-Means approach does not live up to standard both visually and quantitatively, as it is too biased toward point density, and produces suboptimal rep-rep/dist-rep ratios.
 
 We will exclude k-Means from now on and focus on the other two methods.
 
