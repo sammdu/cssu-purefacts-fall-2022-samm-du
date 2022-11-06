@@ -120,6 +120,7 @@ def graph_disconnect(
     connected components.
     Return the floating point mean centroids for each connected component.
     """
+
     # create a graph of all points with their position as an attribute
     G = nx.Graph()
     for id, pos in enumerate(input_data):
@@ -175,7 +176,7 @@ if __name__ == "__main__":
             data,
             NUM_REPS,
             int(r) if (r := args.get("radius")) else 6000,
-            int(b) if (b := args.get("ranching_factor")) else 180,
+            int(b) if (b := args.get("branching_factor")) else 180,
         )
         coverage_set = points_1nn_to_centroids(data, gd_centroids)
     else:
