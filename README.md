@@ -1,12 +1,23 @@
 # cssu-purefacts-fall-2022-samm-du
 
+## Table of Contents
+
+1. [Prepared outputs](#1-prepared-outputs)
+2. [Usage](#2-usage)  
+   2.0. [Prerequisites](#prerequisites)  
+   2.1. [Python Script](#21-python-script)  
+   2.1. [Jupyter Notebook](#22-jupyter-notebook)
+3. [Analysis](#3-analysis)
+
 ## 1. Prepared outputs:
+
 :eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
 
 ## 2. Usage
 
-#### Create a virtual environment & install the required packages
+#### Prerequisites
 
+Create a virtual environment & install the required packages
 This program requires `Python3.10` or above.
 
 Please install the necessary packages in [`requirements.txt`](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/requirements.txt).
