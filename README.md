@@ -1,6 +1,6 @@
 # cssu-purefacts-fall-2022-samm-du
 
-## Table of Contents
+# Table of Contents
 
 1. [Prepared outputs](#1-prepared-outputs)
 2. [Usage](#2-usage)  
@@ -9,17 +9,17 @@
    2.1. [Jupyter Notebook](#22-jupyter-notebook)
 3. [Analysis](#3-analysis)
 
-## 1. Prepared outputs:
+# 1. Prepared outputs:
 
 :eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
 
 👉 [graph_disconnect](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **graph-disconnect** approach. It has the best rep-rep/**max-distance** ratio. See [Analysis](#3-analysis) section for more details.
 
-👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
+👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/hierarchical_clustering) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
 
-## 2. Usage
+# 2. Usage
 
-#### Prerequisites
+### Prerequisites
 
 Create a virtual environment & install the required packages
 This program requires `Python3.10` or above.
@@ -35,11 +35,11 @@ numpy==1.23.4
 scikit-learn==1.1.3
 ```
 
-### 2.1. Python Script
+## 2.1. Python Script
 
 👉 [point_coverage.py](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/point_coverage.py)
 
-#### Computing for a single N value:
+### 🟩 Computing for a single N value:
 
 The python program computes the required points for one N value.
 
@@ -64,19 +64,19 @@ options:
                         Path to the output csv file. (e.g. output.csv)
 ```
 
-:arrow_forward: Example with clustering algorithm:
+➡️ Example with clustering algorithm:
 
 ```bash
 python3.10 ./point_coverage.py -n 10 -a clustering -o out.csv input.csv
 ```
 
-:arrow_forward: Example with graph algorithm:
+➡️ Example with graph algorithm:
 
 ```bash
 python3.10 ./point_coverage.py -n 10 -a graph -r 6000 -b 180 -o out_g.csv input.csv
 ```
 
-#### Computing for all specified N values:
+### 🟩 Computing for all specified N values:
 
 We can use the provided `run.sh` to produce output files for all N values specified in the handout:
 
@@ -88,7 +88,7 @@ The script will also time the execution for each N value round.
 
 Output files will be generated in the current directory, named `output_<algorithm>_%d.csv`.
 
-:arrow_forward: Example with clustering algorithm:
+➡️ Example with clustering algorithm:
 
 ```bash
 ./run.sh clustering input.csv
@@ -111,7 +111,7 @@ Computing for N = 380
 Took 0.39 seconds.
 ```
 
-:arrow_forward: Example with graph algorithm:
+➡️ Example with graph algorithm:
 
 ```bash
 ./run.sh graph input.csv
@@ -134,7 +134,7 @@ Computing for N = 380
 Took 98.65 seconds.
 ```
 
-### 2.2. Jupyter Notebook
+## 2.2. Jupyter Notebook
 
 👉 [experiment.ipynb](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/experiment.ipynb)
 
@@ -142,6 +142,6 @@ The Jupyter Notebook contains step-by-step computation and analysis.
 Useful if you are interested in the details.
 The same required packages apply.
 
-## 3. Analysis
+# 3. Analysis
 
 ⚠️ TBD
