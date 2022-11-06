@@ -170,7 +170,7 @@ We will look at the three approaches in detail below.
 
 Initially, the given problem appeared to me as a [clustering problem](https://en.wikipedia.org/wiki/Cluster_analysis). For this type of approach, we group the input points into N clusters, then find the geometric centroids for each cluster, and pick the closest point to the centroid as a representative.
 
-I have evaluated [various clustering algorithms](https://scikit-learn.org/stable/modules/clustering.html#clustering) provided by the [`Scikit-Learn`](https://scikit-learn.org/stable/index.html) library. We must exclude the algorithms that does not allow specifying the number of clusters that should be present in the output, because they are not suitable for the given problem.
+I have evaluated [various clustering algorithms](https://scikit-learn.org/stable/modules/clustering.html#clustering) provided by the [`Scikit-Learn`](https://scikit-learn.org/stable/index.html) library. We must exclude the algorithms that do not allow specifying the number of clusters in the output, because they are not suitable for the given problem.
 
 #### k-Means Clustering
 
@@ -178,7 +178,7 @@ I have evaluated [various clustering algorithms](https://scikit-learn.org/stable
 
 This algorithm is perhaps the most well-known unsupervised clustering algorithm, so naturally, it became my first candidate.
 
-It starts with all input points in one cluster, picks N random centroids, and tries to absorb points, such that each cluster contains points that are as close to each other as possible, and recomputes the centroids. This process repeats until the centroids no longer move significantly across iterations.
+It starts by picking N random points as centroids, tries to absorb adjacent points, and recomputes the centroids. This process repeats until the centroids no longer move significantly across iterations.
 
 The [KMeans function provided by `Scikit-Learn`](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html#sklearn.cluster.KMeans) returns cluster centroids at the end of the algorithm, which are ready to be [converted to input data points](#313-processing-centroids).
 
@@ -225,22 +225,53 @@ The centroids returned from clustering are not necessarily part of the input dat
 
 ### 3.2.1. Visual Inspection
 
+In the following plots:
+- dark gray points are input data
+- blue points are floating-point centroids
+- red points are input points chosen as representatives, which are closest to the blue centroids
+
+For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branching factor is chosen to be `180`. 
+
+#### Scatter Plots for N=10
 <table>
 	<tbody>
 		<tr>
 			<th>k-Means</th>
-			<td><img width="300" src="" /></td>
-			<td>Comments</td>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200195614-6fedbc0f-f571-4210-a3a5-8ee012d7185d.png" />
+</td>
+			<td width="200">The reps appear to be concentrated in dense areas, rather than across the geometric span of the input points. </td>
 		</tr>
 		<tr>
 			<th>Hierarchical</th>
-			<td><img width="300" src="" /></td>
-			<td>Comments</td>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200195739-91771e63-7779-469b-849c-ff575156a582.png" /></td>
+			<td width="200">The reps are reasonably distributed across the geometric region of the input points, with a few outlier points being far from a rep.</td>
 		</tr>
 		<tr>
 			<th>Graph-Disconnect</th>
-			<td><img width="300" src="" /></td>
-			<td>Comments</td>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200195751-54fa0a7b-0a86-44fc-b16e-b3b11f59dafc.png" /></td>
+			<td width="200">The reps are dipersed far from each other, and most outlier points are close to a rep.</td>
+		</tr>
+	</tbody>
+</table>
+
+#### Scatter Plots for N=63
+<table>
+	<tbody>
+		<tr>
+			<th>k-Means</th>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200196227-229fa08b-f73d-41c7-8e10-ae0805b21553.png" />
+</td>
+			<td width="200">k-Means continues to favor dense regions, with many points on the exterior far from a rep.</td>
+		</tr>
+		<tr>
+			<th>Hierarchical</th>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200196234-de078cfa-72ce-4aa0-923d-d392c526008f.png" /></td>
+			<td width="200">Even coverage across the geometric span of the input data, with both dense and sparse regions reasonably covered. Few points are far from a rep.</td>
+		</tr>
+		<tr>
+			<th>Graph-Disconnect</th>
+			<td width="610"><img width="600" src="https://user-images.githubusercontent.com/10665890/200196241-ca5f4fdd-6c6e-490d-8018-925d4ffd30b7.png" /></td>
+			<td width="200">Outlier points seem to be favored over densely congregated points. Many points in dense regions are not covered by a rep.</td>
 		</tr>
 	</tbody>
 </table>
