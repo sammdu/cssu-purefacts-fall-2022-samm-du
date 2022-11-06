@@ -152,6 +152,9 @@ The Jupyter Notebook contains step-by-step computation and analysis, as well as 
 Useful if you are interested in the details.
 The same required packages apply.
 
+You can view and edit Jupyter Notebooks on your own computer using [Visual Studio Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks).
+For online editing, feel free to check out [Google Colaboratory](https://colab.research.google.com/).
+
 # 3. Analysis
 
 The following three approaches to sampling N representatives from a collection of input points in order to attain optimal geometric coverage are evaluated:
@@ -163,6 +166,8 @@ The following three approaches to sampling N representatives from a collection o
 Out of the three, only "Hierarchical Clustering" and "Graph-Disconnect" are deemed acceptable, and only "Hierarchical Clustering" performs consistently across many N values.
 
 We will look at the three approaches in detail below.
+
+> If you would like to follow along with the analysis, please feel free to check out the [Jupyter Notebook](#22-jupyter-notebook), as it provides step-by-step computation. You can even tweak parameters if you download the notebook to your local computer.
 
 ## 3.1. General Approach
 
@@ -327,7 +332,7 @@ I will discuss 4 ways to evaluate the point coverage for each of the three appro
     </thead>
 	<tbody>
 		<tr>
-			<td>Total</td>
+			<td>Total<br>Distance</td>
 			<td colspan="3">29272141.3949</td>
 			<td colspan="3">34850046.2278</td>
 			<td colspan="3">37936438.9315</td>
@@ -365,7 +370,7 @@ I will discuss 4 ways to evaluate the point coverage for each of the three appro
 			<td rowspan="2">Ratio</td>
 			<td>rr/max</td>
 			<td>rr/avg</td>
-			<td rowspan="2">Suboptimal</td>
+			<td rowspan="2">Worst</td>
 			<td>rr/max</td>
 			<td>rr/avg</td>
 			<td rowspan="2">Best Average</td>
@@ -406,43 +411,57 @@ We will exclude k-Means from now on and focus on the other two methods.
 		</tr>
 		<tr>
 			<td>10</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>2.2066</td>
+			<td>0.7140</td>
+			<td>2.1005</td>
+			<td>0.8868</td>
 		</tr>
 		<tr>
 			<td>25</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>1.5561</td>
+			<td>0.6281</td>
+			<td>0.2790</td>
+			<td>0.1034</td>
 		</tr>
 		<tr>
 			<td>63</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>1.1474</td>
+			<td>0.3402</td>
+			<td>0.1688</td>
+			<td>0.0426</td>
 		</tr>
 		<tr>
 			<td>159</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>0.9536</td>
+			<td>0.3582</td>
+			<td>0.2131</td>
+			<td>0.0779</td>
 		</tr>
         <tr>
 			<td>380</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>1.1536</td>
+			<td>0.4710</td>
+			<td>0.1439</td>
+			<td>0.0456</td>
 		</tr>
 	</tbody>
 </table>
 
+We can see that, for both Hierarchical Clustering and Graph-Disconnect, their efficacy ratios seem to decrease with larger N values.
+
+For N=10, Graph-Disconnect has superior worst-case coverage, while Hierarchical Clustering has superior average-case coverage.
+
+For N>10, Graph-Disconnect suffers from a sharp drop in efficacy ratios, while Hierarchical Clustering continues to perform consistently well, and beats Graph-Disconnect on all measures.
+
+> It is worth nothing that, in my trials, the coverage efficacy of Graph-Disconnect is highly influenced by its performance constraint parameters (radius and branching factor). Increasing these parameters tend to improve coverage ratios, but will cause exponential performance degradation. For large N, I have not found performance parameters that allow Graph-Disconnect to outperform Hierarchical Clustering in coverage while completing in a practical amount of time.
+
+In summary, Hierarchical Clustering produces better point coverage for scenarios.
+
 ## 3.3. Computational Performance
+
+The following are recorded execution times for both algorithms on the same computer, measured in seconds.
+
+For the Graph-Disconnect algorithm, the radius is chosen to be `6000`, and branching factor is chosen to be `180`. These parameters have a significant impact of the execution time of the algorithm.
 
 <table>
 	<tbody>
@@ -453,30 +472,36 @@ We will exclude k-Means from now on and focus on the other two methods.
 		</tr>
 		<tr>
 			<td>10</td>
-			<td></td>
-			<td></td>
+			<td>0.41</td>
+			<td>49.89</td>
 		</tr>
 		<tr>
 			<td>25</td>
-			<td></td>
-			<td></td>
+			<td>0.44</td>
+			<td>86.59</td>
 		</tr>
 		<tr>
 			<td>63</td>
-			<td></td>
-			<td></td>
+			<td>0.49</td>
+			<td>92.02</td>
 		</tr>
 		<tr>
 			<td>159</td>
-			<td></td>
-			<td></td>
+			<td>0.60</td>
+			<td>96.90</td>
 		</tr>
 		<tr>
 			<td>380</td>
-			<td></td>
-			<td></td>
+			<td>0.82</td>
+			<td>96.15</td>
 		</tr>
 	</tbody>
 </table>
 
+As seen here, Hierarchical Clustering is far superior to Graph-Disconnect when it comes to computational performance.
+
 ## 3.4. Conclusion
+
+Across different approaches to selecting representative points for optimal point coverage given a collection of input points, **Hierarchical Clustering** is overwhelmingly successful, both in terms of coverage metrics, and in computational performance.
+
+The only case to favor Graph-Disconnect is for very small N values, and if long execution times are acceptable.
