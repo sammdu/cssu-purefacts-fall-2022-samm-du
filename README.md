@@ -15,7 +15,7 @@
 
 👉 [graph_disconnect](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **graph-disconnect** approach. It has the best rep-rep/**max-distance** ratio. See [Analysis](#3-analysis) section for more details.
 
-👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
+👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/hierarchical_clustering) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
 
 # 2. Usage
 
