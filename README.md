@@ -7,21 +7,27 @@
    2.0. [Prerequisites](#prerequisites)  
    2.1. [Python Script](#21-python-script)  
    2.1. [Jupyter Notebook](#22-jupyter-notebook)
-3. [Analysis](#3-analysis)
+3. [Analysis](#3-analysis)   
+   3.1. [General Approach](#31-general-approach)   
+   3.2. [Point Coverage Efficacy Evaluation](#32-point-coverage-efficacy-evaluation)   
+   3.3. [Computational Performance](#33-computational-performance)   
+   3.4. [Conclusion](#34-conclusion)   
 
 # 1. Prepared outputs:
 
 :eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
 
-👉 [graph_disconnect](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **graph-disconnect** approach. It has the best rep-rep/**max-distance** ratio. See [Analysis](#3-analysis) section for more details.
+🥇 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/hierarchical_clustering) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio, and perform more consistently across different N values. This is the preferred set of outputs. 
 
-👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/hierarchical_clustering) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
+🥈 [graph_disconnect](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **graph-disconnect** approach. It has the best rep-rep/**max-distance** ratio on small N values only. 
+
+See [Analysis](#3-analysis) section for more details.
 
 # 2. Usage
 
 ### Prerequisites
 
-Create a virtual environment & install the required packages
+[Create a virtual environment](https://realpython.com/python-virtual-environments-a-primer/#how-can-you-work-with-a-python-virtual-environment) & install the required packages
 This program requires `Python3.10` or above.
 
 Please install the necessary packages in [`requirements.txt`](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/requirements.txt).
@@ -67,13 +73,13 @@ options:
 ➡️ Example with clustering algorithm:
 
 ```bash
-python3.10 ./point_coverage.py -n 10 -a clustering -o out.csv input.csv
+python3.10 ./point_coverage.py -v -n 10 -a clustering -o out_c.csv input.csv
 ```
 
 ➡️ Example with graph algorithm:
 
 ```bash
-python3.10 ./point_coverage.py -n 10 -a graph -r 6000 -b 180 -o out_g.csv input.csv
+python3.10 ./point_coverage.py -v -n 10 -a graph -r 6000 -b 180 -o out_g.csv input.csv
 ```
 
 ### 🟩 Computing for all specified N values:
@@ -138,10 +144,36 @@ Took 98.65 seconds.
 
 👉 [experiment.ipynb](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/blob/main/experiment.ipynb)
 
-The Jupyter Notebook contains step-by-step computation and analysis.
+The Jupyter Notebook contains step-by-step computation and analysis, as well as scatter plots to visualize results.
 Useful if you are interested in the details.
 The same required packages apply.
 
 # 3. Analysis
 
-⚠️ TBD
+The following three approaches to sampling N representatives from a collection of input points in order to attain optimal geometric coverage are evaluated:
+- k-Means Clustering
+- Hierarchical Clustering
+- Graph-Disconnect
+
+Out of the three, only "Hierarchical Clustering" and "Graph-Disconnect" are deemed acceptable, and only "Hierarchical Clustering" performs consistently across many N values. 
+
+We will look at the three approaches in detail below. 
+
+## 3.1. General Approach
+
+### 3.1.1. Classic Clustering Algorithms
+
+### 3.1.2. Graph Connectivity
+
+## 3.2. Point Coverage Efficacy Evaluation
+
+### 3.2.1. Visual Inspection
+
+### 3.2.2. Quantitative Measures
+
+### 3.2.3. Comparing Efficacy
+
+## 3.3. Computational Performance
+
+## 3.4. Conclusion
+
