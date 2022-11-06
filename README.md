@@ -13,6 +13,10 @@
 
 :eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
 
+👉 [graph_disconnect](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **graph-disconnect** approach. It has the best rep-rep/**max-distance** ratio. See [Analysis](#3-analysis) section for more details.
+
+👉 [hierarchical_clustering](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs/graph_disconnect) contains results generated using the **hierarchical clustering** approach. It has the best rep-rep/**average-distance** ratio. See [Analysis](#3-analysis) section for more details.
+
 ## 2. Usage
 
 #### Prerequisites
@@ -37,16 +41,38 @@ scikit-learn==1.1.3
 
 #### Computing for a single N value:
 
-The python program computes the required points for one N value, as such:
+The python program computes the required points for one N value.
 
 ```
-usage: point_coverage.py [-h] -n NUM_REPS -o OUTPUT input_file
+usage: point_coverage.py [-h] -n NUM_REPS -a ALGORITHM [-r RADIUS] [-b BRANCHING_FACTOR] -o OUTPUT input_file
+
+positional arguments:
+  input_file
+
+options:
+  -h, --help            show this help message and exit
+  -n NUM_REPS, --num-reps NUM_REPS
+                        Number of representative points to pick from the input data. Positive integer.
+  -a ALGORITHM, --algorithm ALGORITHM
+                        One of 'clustering', 'graph'.
+  -r RADIUS, --radius RADIUS
+                        If using 'graph' algorithm, select the max radius between connected points.
+  -b BRANCHING_FACTOR, --branching-factor BRANCHING_FACTOR
+                        If using 'graph' algorithm, select the branching factor for each point in the graph.
+  -o OUTPUT, --output OUTPUT
+                        Path to the output csv file. (e.g. output.csv)
 ```
 
-Example:
+:arrow_forward: Example with clustering algorithm:
 
 ```bash
-python3.10 point_coverage.py -n 10 -o output.csv input.csv
+python3.10 ./point_coverage.py -n 10 -a clustering -o out.csv input.csv
+```
+
+:arrow_forward: Example with graph algorithm:
+
+```bash
+python3.10 ./point_coverage.py -n 10 -a graph -r 6000 -b 180 -o out_g.csv input.csv
 ```
 
 #### Computing for all specified N values:
@@ -54,10 +80,58 @@ python3.10 point_coverage.py -n 10 -o output.csv input.csv
 We can use the provided `run.sh` to produce output files for all N values specified in the handout:
 
 ```bash
-bash ./run.sh input.csv
+bash ./run.sh <algorithm> <input-file>
 ```
 
-Output files will be generated in the current directory, named `output_%d.csv`.
+The script will also time the execution for each N value round.
+
+Output files will be generated in the current directory, named `output_<algorithm>_%d.csv`.
+
+:arrow_forward: Example with clustering algorithm:
+
+```bash
+./run.sh clustering input.csv
+```
+
+```
+Computing for N = 10
+Took 0.39 seconds.
+
+Computing for N = 25
+Took 0.41 seconds.
+
+Computing for N = 63
+Took 0.39 seconds.
+
+Computing for N = 159
+Took 0.39 seconds.
+
+Computing for N = 380
+Took 0.39 seconds.
+```
+
+:arrow_forward: Example with graph algorithm:
+
+```bash
+./run.sh graph input.csv
+```
+
+```
+Computing for N = 10
+Took 49.95 seconds.
+
+Computing for N = 25
+Took 91.06 seconds.
+
+Computing for N = 63
+Took 96.84 seconds.
+
+Computing for N = 159
+Took 99.31 seconds.
+
+Computing for N = 380
+Took 98.65 seconds.
+```
 
 ### 2.2. Jupyter Notebook
 
