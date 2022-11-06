@@ -44,13 +44,14 @@ scikit-learn==1.1.3
 The python program computes the required points for one N value.
 
 ```
-usage: point_coverage.py [-h] -n NUM_REPS -a ALGORITHM [-r RADIUS] [-b BRANCHING_FACTOR] -o OUTPUT input_file
+usage: point_coverage.py [-h] [-v] -n NUM_REPS -a ALGORITHM [-r RADIUS] [-b BRANCHING_FACTOR] -o OUTPUT input_file
 
 positional arguments:
   input_file
 
 options:
   -h, --help            show this help message and exit
+  -v, --verbose         When set, print analytics.
   -n NUM_REPS, --num-reps NUM_REPS
                         Number of representative points to pick from the input data. Positive integer.
   -a ALGORITHM, --algorithm ALGORITHM

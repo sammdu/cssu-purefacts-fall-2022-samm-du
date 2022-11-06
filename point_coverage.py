@@ -4,6 +4,7 @@ import argparse
 import csv
 import numpy as np
 import networkx as nx
+import analytics as an
 
 from typing import Optional
 from itertools import combinations
@@ -14,6 +15,13 @@ from sklearn.neighbors import NearestNeighbors
 
 ap = argparse.ArgumentParser()
 ap.add_argument("input_file")
+ap.add_argument(
+    "-v",
+    "--verbose",
+    required=False,
+    help="When set, print analytics.",
+    action="store_true",
+)
 ap.add_argument(
     "-n",
     "--num-reps",
@@ -180,3 +188,21 @@ if __name__ == "__main__":
         csv_writer = csv.writer(output_file, delimiter=",")
         for point in coverage:
             csv_writer.writerow(point)
+
+    # produce analytics for the point coverage generation
+    if args["verbose"]:
+        print(f"\n  Analytics | {args['algorithm']}:")
+        print(
+            f"\tNaive total distance: \n\t\t{an.data_to_rep_total_dist(data, coverage)}"
+        )
+        print()
+        stats = an.dists_to_closest_rep(data, coverage_set)
+        print("\tDistances from input points to their closest rep:")
+        print(f"\t\tmin = {stats[0]}, max = {stats[1]}, average = {stats[2]}")
+        print()
+        rr = an.min_dist_between_reps(coverage_set)
+        print(f"\tClosest distance between reps:\n\t\t{rr}")
+        print()
+        print("\tMin Rep-Rep (rr) / Point-Rep ratios:")
+        print(f"\t\t rr/max: {rr/stats[1]}")
+        print(f"\t\t rr/avg: {rr/stats[2]}")
