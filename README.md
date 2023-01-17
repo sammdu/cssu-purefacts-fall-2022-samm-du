@@ -1,7 +1,9 @@
-# cssu-purefacts-fall-2022-samm-du
+<h1 align="center">CSSU x Purefacts Programming Challange</h1>
+<h2 align="center">Geometric Point Sampling Problem</h2>
 
 # Table of Contents
 
+0. [Problem statement](#0-problem-statement)
 1. [Prepared outputs](#1-prepared-outputs)
 2. [Usage](#2-usage)  
    2.0. [Prerequisites](#prerequisites)  
@@ -13,7 +15,18 @@
    3.3. [Computational Performance](#33-computational-performance)  
    3.4. [Conclusion](#34-conclusion)
 
-# 1. Prepared outputs:
+# 0. Problem statement
+
+Given a set A of points in a 2D space ([input.csv](input.csv) - provided), select an `N` number of random Representative Points from this set such that they best "cover" the *shape* of the point set (as opposed to its density).
+
+Output should be the source code and 5 separate `output.csv` files where `N` = 10, 25, 63, 159, 380
+
+<p align="center">
+<img height="300px" src="https://user-images.githubusercontent.com/10665890/213011187-de28dcc9-66b5-4e9f-9374-d28042da8fab.png" />
+
+</p>
+
+# 1. Prepared outputs
 
 :eye: See the [outputs](https://github.com/sammdu/cssu-purefacts-fall-2022-samm-du/tree/main/outputs) folder.
 
